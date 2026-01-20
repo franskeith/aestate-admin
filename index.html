@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AESTATE - Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin-style.css">
+</head>
+
+<body>
+
+    <div id="login-overlay">
+        <div class="login-box">
+            <h2>Admin Access</h2>
+            <p>Masukkan kunci rahasia untuk mengelola produk.</p>
+            <input type="password" id="admin-pass" placeholder="Password...">
+            <button onclick="checkLogin()">Masuk</button>
+            <p id="login-error" class="error-msg"></p>
+        </div>
+    </div>
+
+    <div id="dashboard" style="display: none;">
+        <header>
+            <h1>📦 Product Manager</h1>
+            <button onclick="logout()" class="btn-logout">Logout</button>
+        </header>
+
+        <div class="container">
+            <form id="product-form">
+
+                <div class="form-group">
+                    <label>Nama Produk</label>
+                    <input type="text" id="p-name" placeholder="Contoh: Linen Shirt / Wayfarer Glasses" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Kategori</label>
+                        <select id="p-category" required>
+                            <option value="Top">Top (Atasan)</option>
+                            <option value="Bottom">Bottom (Bawahan)</option>
+                            <option value="Outer">Outer (Luaran)</option>
+                            <option value="Set">Set (One Set)</option>
+                            <option value="Accessories">Accessories (Aksesoris)</option>
+                            <option value="Shoes">Shoes (Sepatu)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Harga (IDR)</label>
+                        <input type="number" id="p-price" placeholder="150000" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Link Gambar (URL)</label>
+                    <input type="url" id="p-image" placeholder="https://..." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Link Shopee/Tokped</label>
+                    <input type="url" id="p-link" placeholder="https://..." required>
+                </div>
+
+                <hr>
+
+                <h3>🏷️ Tag & Logic Config</h3>
+                <p class="hint">Centang tag yang sesuai agar rekomendasi akurat.</p>
+
+                <div class="tag-section" style="border-left: 5px solid #3498db;">
+                    <label>Gender Target:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tags" value="women" checked> Women (Cewek)</label>
+                        <label><input type="checkbox" name="tags" value="men"> Men (Cowok)</label>
+                        <label><input type="checkbox" name="tags" value="unisex"> Unisex (Semua)</label>
+                    </div>
+                </div>
+
+                <div class="tag-section" style="border-left: 5px solid #e67e22;">
+                    <label>Cocok untuk Skin Tone:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tags" value="warm-tone"> Warm (Sawo Matang/Kuning)</label>
+                        <label><input type="checkbox" name="tags" value="cool-tone"> Cool (Light/Putih/Pink)</label>
+                        <label><input type="checkbox" name="tags" value="neutral-tone"> Neutral / All Tone</label>
+                    </div>
+                </div>
+
+                <div class="tag-section" style="border-left: 5px solid #27ae60;">
+                    <label>Cocok untuk Body Type (Baju/Celana):</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tags" value="rectangle-body"> Rectangle</label>
+                        <label><input type="checkbox" name="tags" value="pear-body"> Pear</label>
+                        <label><input type="checkbox" name="tags" value="hourglass-body"> Hourglass</label>
+                        <label><input type="checkbox" name="tags" value="apple-body"> Apple</label>
+                        <label><input type="checkbox" name="tags" value="inverted-triangle-body"> Inverted Triangle
+                            (V-Shape)</label>
+
+                        <label><input type="checkbox" name="tags" value="oval-body"> Oval (O)</label>
+
+                        <label><input type="checkbox" name="tags" value="all-body"> All Body Types</label>
+                    </div>
+                </div>
+
+                <div class="tag-section" style="border-left: 5px solid #9b59b6;">
+                    <label>Cocok untuk Wajah (Khusus Aksesoris/Topi):</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tags" value="oval-face"> Oval</label>
+                        <label><input type="checkbox" name="tags" value="round-face"> Round (Bulat)</label>
+                        <label><input type="checkbox" name="tags" value="square-face"> Square (Kotak)</label>
+                        <label><input type="checkbox" name="tags" value="heart-face"> Heart</label>
+                        <label><input type="checkbox" name="tags" value="diamond-face"> Diamond</label>
+                        <label><input type="checkbox" name="tags" value="oblong-face"> Oblong</label>
+                        <label><input type="checkbox" name="tags" value="all-face"> All Face Shapes</label>
+                    </div>
+                </div>
+                <div class="tag-section" style="border-left: 5px solid #f1c40f;">
+                    <label>Cocok untuk Tinggi Badan (Khusus Sepatu):</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tags" value="short-height"> Short/Mini (Butuh
+                            Heels/Platform)</label>
+                        <label><input type="checkbox" name="tags" value="tall-height"> Tall (Butuh Flat/Low)</label>
+                        <label><input type="checkbox" name="tags" value="average-height"> Average (Sedang)</label>
+                        <label><input type="checkbox" name="tags" value="all-height"> All Height (Semua)</label>
+                    </div>
+                </div>
+
+                <div class="tag-section" style="border-left: 5px solid #e74c3c;">
+                    <label>Event/Occasion Tags:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="tags" value="valentine"> Valentine (Feb 14)</label>
+                        <label><input type="checkbox" name="tags" value="summer"> Summer (Musim Panas)</label>
+                        <label><input type="checkbox" name="tags" value="office"> Office (Kerja)</label>
+                        <label><input type="checkbox" name="tags" value="weekend"> Weekend (Akhir Pekan)</label>
+                        <label><input type="checkbox" name="tags" value="casual"> Casual (Santai)</label>
+                        <label><input type="checkbox" name="tags" value="new"> New Arrival</label>
+                        <label><input type="checkbox" name="tags" value="best_seller"> Best Seller</label>
+                    </div>
+                </div>
+
+                <div class="preview-box">
+                    <span>Generated Tags:</span>
+                    <code id="tag-preview">...</code>
+                </div>
+
+                <button type="submit" id="submit-btn">UPLOAD PRODUK</button>
+            </form>
+
+            <hr style="margin: 40px 0; border: 0; border-top: 2px dashed #ddd;">
+
+            <div class="product-list-section">
+                <div class="list-header">
+                    <h3>📂 Daftar Produk Aktif</h3>
+                    <button onclick="loadProducts()" class="btn-refresh">🔄 Refresh Data</button>
+                </div>
+
+                <div class="table-wrapper">
+                    <table id="product-table">
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Nama Produk</th>
+                                <th>Kategori</th>
+                                <th>Harga</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <tr>
+                                <td colspan="5" style="text-align: center;">Sedang memuat data...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+
+</html>
